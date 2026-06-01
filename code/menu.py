@@ -8,6 +8,7 @@ from pygame.font import Font
 from code.const import WIN_WIDTH
 from code.const import COLOR_ORANGE
 from code.const import COLOR_WHITE
+from code.const import COLOR_YELLOW
 from code.const import MENU_OPTION
 
 class Menu:
@@ -16,24 +17,46 @@ class Menu:
         self.window = window
         self.surf = pygame.image.load('./asset/MenuBg.png') #carregando a imagem
         self.rect = self.surf.get_rect(left=0, top=0) #cria o retângulo
-    def run(self, ):
+    def run(self):
+        menu_option = 0
         pygame.mixer_music.load('./asset/menu.mp3') #carrega a música
         pygame.mixer_music.play(-1) #toca a música (-1 continua tocando)
 
         while True:
+            #DRAW IMAGENS
             self.window.blit(source=self.surf, dest=self.rect)  # Adicionando a imagem ao retângulo
-            self.menu_text(50, "Mountain", (COLOR_WHITE), ((WIN_WIDTH / 2), 70))
-            self.menu_text(50, "Shooter", (COLOR_WHITE), ((WIN_WIDTH / 2), 120))
+            self.menu_text(50, "Mountain", (COLOR_ORANGE), ((WIN_WIDTH / 2), 70)) #Adiciona texto ao menu
+            self.menu_text(50, "Shooter", (COLOR_ORANGE), ((WIN_WIDTH / 2), 120)) #Adiciona texto ao menu
 
+            #Cria o laço de repetição das opções do menu
             for i in range(len(MENU_OPTION)):
-                self.menu_text(20, MENU_OPTION[i], (COLOR_WHITE), ((WIN_WIDTH / 2), 200 + 25 * i))
+                if i == menu_option: #Adiciona a cor amarela para o menu que está selecionado
+                    self.menu_text(20, MENU_OPTION[i], (COLOR_YELLOW), ((WIN_WIDTH / 2), 200 + 25 * i))
+                else:
+                    self.menu_text(20, MENU_OPTION[i], (COLOR_WHITE), ((WIN_WIDTH / 2), 200 + 25 * i))
             pygame.display.flip()
 
             #Criasse o evento para finalizar a janela / #Check for all events
             for event in pygame.event.get(): #checa e pega os eventos
-               if event.type == pygame.QUIT: #se o tipo do evendo for sair
+                if event.type == pygame.QUIT: #se o tipo do evendo for sair
                     pygame.quit() #CLose Window
                     quit() #encerra a inicialização do pygame
+                #Adicionar seleção de menu
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN: #telha para baixo
+                        if menu_option < len(MENU_OPTION) - 1: #incrementa para retornar a primeira opção após chegar na última
+                            menu_option += 1 #incremanta conforme seta para baixo
+                        else:
+                            menu_option = 0 #Retona para o começo
+                    if event.key == pygame.K_UP: #telha para cima
+                        if menu_option > 0: #
+                            menu_option -= 1 #decremanta conforme seta para cima
+                        else:
+                            menu_option = len(MENU_OPTION) - 1
+                    if event.key == pygame.K_RETURN: #Enter
+                        return MENU_OPTION[menu_option] #para retornar o nome da opção corretamente
+
+
     #Formatação texto
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
         text_font: Font = pygame.font.SysFont(name="Lucida Sans Typewriter", size=text_size)
