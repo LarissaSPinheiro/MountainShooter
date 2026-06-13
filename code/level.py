@@ -8,10 +8,12 @@ from pygame import Surface, Rect
 from pygame.font import Font
 
 from code.EntityMediator import EntityMediator
+from code.enemy import Enemy
 from code.entity import Entity
 from code.entityFactory import EntityFactory
 
 from code.const import COLOR_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME
+from code.player import Player
 
 
 class Level:
@@ -37,7 +39,11 @@ class Level:
             clock.tick(60)  #Tempo de "passagem" da tela
             for ent in self.entity_list:
                 self.window.blit(source=ent.surf, dest=ent.rect) #desenha a imagem em tela
-                ent.move()
+                ent.move() #move os player e enemys
+                if isinstance(ent, (Player, Enemy)):
+                    shoot = ent.shoot()
+                    if shoot is not None:
+                        self.entity_list.append(shoot) #colocar o meu tiro dentro das entidades
             #Evento para fechar a janela no nível 1
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
