@@ -7,6 +7,7 @@ import pygame
 from pygame import Surface, Rect
 from pygame.font import Font
 
+from code.EntityMediator import EntityMediator
 from code.entity import Entity
 from code.entityFactory import EntityFactory
 
@@ -51,6 +52,10 @@ class Level:
             self.level_text(14, f'fps: {clock.get_fps() :.0f}s', COLOR_WHITE, (10, WIN_HEIGHT - 35))  # Print do clock em tela, imprime o FPS do game
             self.level_text(14, f'entidades: {len(self.entity_list)}', COLOR_WHITE, (10, WIN_HEIGHT - 20))  # Depuração do código, demonstra quantas entidades há em tela
             pygame.display.flip() #mostra em tela
+
+            #Colisão
+            EntityMediator.verify_collision(entity_list=self.entity_list)
+            EntityMediator.verify_health(entity_list=self.entity_list)
         pass
 
     def level_text(self, text_size: int, text: str, text_color: tuple, text_pos: tuple):
