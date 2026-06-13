@@ -6,9 +6,9 @@ from pygame import Surface, Rect
 from pygame.font import Font
 
 from code.const import WIN_WIDTH
-from code.const import COLOR_ORANGE
-from code.const import COLOR_WHITE
-from code.const import COLOR_YELLOW
+from code.const import C_ORANGE
+from code.const import C_WHITE
+from code.const import C_YELLOW
 from code.const import MENU_OPTION
 
 class Menu:
@@ -25,15 +25,15 @@ class Menu:
         while True:
             #DRAW IMAGENS
             self.window.blit(source=self.surf, dest=self.rect)  # Adicionando a imagem ao retângulo
-            self.menu_text(50, "Mountain", (COLOR_ORANGE), ((WIN_WIDTH / 2), 70)) #Adiciona texto ao menu
-            self.menu_text(50, "Shooter", (COLOR_ORANGE), ((WIN_WIDTH / 2), 120)) #Adiciona texto ao menu
+            self.menu_text(50, "Mountain", (C_ORANGE), ((WIN_WIDTH / 2), 70)) #Adiciona texto ao menu
+            self.menu_text(50, "Shooter", (C_ORANGE), ((WIN_WIDTH / 2), 120)) #Adiciona texto ao menu
 
             #Cria o laço de repetição das opções do menu
             for i in range(len(MENU_OPTION)):
                 if i == menu_option: #Adiciona a cor amarela para o menu que está selecionado
-                    self.menu_text(20, MENU_OPTION[i], (COLOR_YELLOW), ((WIN_WIDTH / 2), 200 + 25 * i))
+                    self.menu_text(20, MENU_OPTION[i], (C_YELLOW), ((WIN_WIDTH / 2), 200 + 25 * i))
                 else:
-                    self.menu_text(20, MENU_OPTION[i], (COLOR_WHITE), ((WIN_WIDTH / 2), 200 + 25 * i))
+                    self.menu_text(20, MENU_OPTION[i], (C_WHITE), ((WIN_WIDTH / 2), 200 + 25 * i))
             pygame.display.flip()
 
             #Criasse o evento para finalizar a janela / #Check for all events
