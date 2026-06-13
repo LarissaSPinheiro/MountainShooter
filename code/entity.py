@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 
 import pygame
 
+from code.const import ENTITY_HEALTH
+
 
 class Entity(ABC):
     def __init__(self, name: str, position: tuple): #posição do objeto (imagem) onde ele precisa aparecer na tela
@@ -11,6 +13,7 @@ class Entity(ABC):
         self.surf = pygame.image.load('./asset/' + name + '.png').convert_alpha() #busca as imagens de forma dinâmica. Converte trata a imagem de maneira otimizada
         self.rect = self.surf.get_rect(left=position[0], top=position[1])  #cria o retângulo em volta da imagem de forma dinâmica
         self.speed = 0 #Velocidade dos inimigos
+        self.health = ENTITY_HEALTH[self.name] #vida do player ou inimigo
 
     #@ = decoraitor
     @abstractmethod
