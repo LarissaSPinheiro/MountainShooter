@@ -20,7 +20,7 @@ ENTITY_SPEED = {
     'Player1Shot': 1,
     'Player2': 3,
     'Player2Shot': 3,
-    'Enemy1': 2,
+    'Enemy1': 1,
     'Enemy1Shot': 5,
     'Enemy2': 1,
     'Enemy2Shot': 2,

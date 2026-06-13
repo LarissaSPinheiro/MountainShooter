@@ -15,7 +15,7 @@ class Entity(ABC):
         self.speed = 0 #Velocidade dos inimigos
         self.health = ENTITY_HEALTH[self.name] #vida do player ou inimigo
         self.damage = ENTITY_DAMAGE[self.name]
-        self.damage = ENTITY_SCORE[self.name]
+        self.score = ENTITY_SCORE[self.name]
         self.last_dmg = 'None'
 
     #@ = decoraitor

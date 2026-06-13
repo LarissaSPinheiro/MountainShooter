@@ -11,13 +11,11 @@ class EntityMediator:
     @staticmethod
     def __verify_collision_window(ent: Entity): #para verificar se atingiu o limit da tela, __ privado somente dentro da class
         if isinstance(ent, Enemy):  #verifica se a entidade é do tipo inimigo
-            if ent.rect.right < 0:  #quando passar da tela zerar vida inimigo
+            if ent.rect.right <= 0:  #quando passar da tela zerar vida inimigo
                 ent.health = 0
-
         if isinstance(ent, PlayerShot):
             if ent.rect.left >= WIN_WIDTH:
                 ent.health = 0
-
         if isinstance(ent, EnemyShot):  #verifica se a entidade é do tipo inimigo
             if ent.rect.right <= 0:  #destruição do tiro
                 ent.health = 0
@@ -56,7 +54,6 @@ class EntityMediator:
             for ent in entity_list:
                 if ent.name == 'Player2':
                     ent.score += enemy.score
-
 
     @staticmethod
     def verify_collision(entity_list: list[Entity]):

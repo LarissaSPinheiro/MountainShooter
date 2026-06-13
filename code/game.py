@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import pygame
 
 from code.menu import Menu
@@ -31,4 +28,3 @@ class Game:
                 quit()  # encerra a inicialização do pygame
             else:
                 pass
-
