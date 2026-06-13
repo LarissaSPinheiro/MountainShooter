@@ -12,6 +12,7 @@ class Player(Entity):
     def __init__(self, name: str, position: tuple):
         super().__init__(name, position) #herda da classe pai
         self.shot_delay = ENTITY_SHOT_DELAY[self.name]
+        self.score = 0
 
     #Movimento de acordo com as teclas (setas) pressionadas
     def move(self, ):
