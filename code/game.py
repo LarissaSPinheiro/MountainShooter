@@ -21,8 +21,12 @@ class Game:
             game_mode = menu_return
 
             if menu_return in [MENU_OPTION[0], MENU_OPTION[1], MENU_OPTION[2]]:
-                level = Level(self.window, 'Level 1', game_mode) #Inicializa objeto da classe level
-                level_return = level.run() #Começar a execução
+                player_score = [0, 0] #[Player1, Player2]
+                level = Level(self.window, 'Level1', menu_return, player_score) #Inicializa objeto da classe level
+                level_return = level.run(player_score) #Começar a execução
+                if level_return:
+                    level = Level(self.window, 'Level2', menu_return, player_score)
+                    level_return = level.run(player_score)
             elif menu_return == MENU_OPTION[4]: #exit
                 pygame.quit()  # CLose Window
                 quit()  # encerra a inicialização do pygame
