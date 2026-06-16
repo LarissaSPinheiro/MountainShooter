@@ -1,5 +1,8 @@
+import sys
+
 import pygame
 
+from code.Score import Score
 from code.menu import Menu
 
 from code.const import WIN_WIDTH
@@ -16,6 +19,8 @@ class Game:
         self.window = pygame.display.set_mode(size = (WIN_WIDTH, WIN_HEIGHT)) #tamanho da janela 600px por 480px
 
     def run(self, game_mode=None):
+        while True:
+            score = Score(self.window)
             menu = Menu(self.window) #primeiro chamar o menu
             menu_return = menu.run() #retorna a opção do menu que o usuário clicar
             game_mode = menu_return
@@ -27,8 +32,14 @@ class Game:
                 if level_return:
                     level = Level(self.window, 'Level2', menu_return, player_score)
                     level_return = level.run(player_score)
+                    if level_return:
+                        score.save(menu_return, player_score)
+
+            elif menu_return == MENU_OPTION[3]:  # exit
+                score.show()
             elif menu_return == MENU_OPTION[4]: #exit
                 pygame.quit()  # CLose Window
                 quit()  # encerra a inicialização do pygame
             else:
-                pass
+                pygame.quit()
+                sys.exit()
