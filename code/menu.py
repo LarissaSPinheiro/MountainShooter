@@ -1,5 +1,7 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#Exibe a tela inicial com as opções (1P, 2P Coop, 2P Versus, Score, Exit).
+# Captura as teclas ↑ ↓ e Enter para navegar e retorna a opção escolhida como string.
+#Métodos: run → retorna string da opção · menu_text
+
 import pygame
 
 from pygame import Surface, Rect
@@ -11,12 +13,15 @@ from code.const import C_WHITE
 from code.const import C_YELLOW
 from code.const import MENU_OPTION
 
+
 class Menu:
 
     def __init__(self, window):
-        self.window = window
-        self.surf = pygame.image.load('./asset/MenuBg.png').convert_alpha() #carregando a imagem. Convert adicionado para melhorar a dimensão da imagem
+        self.window = window #Referência à janela do jogo para desenhar o menu nela.
+        self.surf = pygame.image.load('./asset/MenuBg.png').convert_alpha() #A imagem de fundo do menu (MenuBg.png).
         self.rect = self.surf.get_rect(left=0, top=0) #cria o retângulo
+
+    #Loop do menu. Escuta teclas ↑ ↓ Enter. Retorna a string da opção escolhida. A opção atual fica amarela; as outras ficam brancas.
     def run(self):
         menu_option = 0
         pygame.mixer_music.load('./asset/menu.mp3') #carrega a música
@@ -57,7 +62,7 @@ class Menu:
                         return MENU_OPTION[menu_option] #para retornar o nome da opção corretamente
 
 
-    #Formatação texto
+    #Renderiza um texto na posição indicada. Usada para desenhar o título e cada opção do menu
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
         text_font: Font = pygame.font.SysFont(name="Lucida Sans Typewriter", size=text_size)
         text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()

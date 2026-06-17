@@ -1,5 +1,7 @@
-#!/usr/bin/python
-# Responsável por gerar as entidades relacionadas. O level aciona a fábrica e ela na linha de montagem gera um produto background, enemy, player
+# Estático get_entity que recebe um nome e retorna o objeto correto.
+# Centraliza a criação de todas as entidades (backgrounds, players, inimigos),
+# separando a lógica de instanciação do restante.
+
 import random
 from unittest import case
 
@@ -14,8 +16,10 @@ from code.player import Player
 
 class EntityFactory:
 
+    #da classe e não do objeto
     @staticmethod
-    def get_entity(entity_name: str, position=(0, 0)):
+    #Recebe um nome e retorna o objeto correto já instanciado
+    def get_entity(entity_name: str):
         match entity_name:
             case 'Level1Bg':
                 list_bg = []

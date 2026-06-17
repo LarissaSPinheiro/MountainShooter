@@ -1,3 +1,8 @@
+#Detecta colisões entre entidades, verifica se saíram da tela e distribui pontuação.
+# Usa isinstance para saber quem pode colidir com quem (ex: PlayerShot só colide com Enemy).
+#isinstance() é uma função Python que verifica se um objeto é de uma classe específica. isinstance(ent, Enemy)
+# retorna True se ent for um Enemy (ou subclasse). É como perguntar "esse objeto é um inimigo?"
+
 from code.EnemyShot import EnemyShot
 from code.PlayerShot import PlayerShot
 from code.const import WIN_WIDTH
@@ -9,6 +14,7 @@ from code.player import Player
 class EntityMediator:
 
     @staticmethod
+    #Remove entidades que saíram da tela: inimigos que passaram pela esquerda, tiros que saíram pelos lados.
     def __verify_collision_window(ent: Entity): #para verificar se atingiu o limit da tela, __ privado somente dentro da class
         if isinstance(ent, Enemy):  #verifica se a entidade é do tipo inimigo
             if ent.rect.right <= 0:  #quando passar da tela zerar vida inimigo
@@ -21,7 +27,7 @@ class EntityMediator:
                 ent.health = 0
 
     @staticmethod
-    #verifica a iteração é valida para realizar a colisão
+    #Compara cada par de entidades. Para cada par válido (Enemy+PlayerShot ou Player+EnemyShot), verifica sobreposição de rects. Se colidir, aplica dano mútuo.
     def __verify_collision_entity(ent1, ent2):
         valid_interaction = False
         if isinstance(ent1, Enemy) and isinstance(ent2, PlayerShot):
@@ -45,6 +51,7 @@ class EntityMediator:
 
 
     @staticmethod
+    # privado (__). Olha enemy.last_dmg para saber qual player atirou e adiciona os pontos ao score dele.
     def __give_score(enemy: Enemy, entity_list: list[Entity]):
         if enemy.last_dmg == 'Player1Shot':
             for ent in entity_list:
@@ -56,6 +63,7 @@ class EntityMediator:
                     ent.score += enemy.score
 
     @staticmethod
+    #Compara cada par de entidades. Para cada par válido (Enemy+PlayerShot ou Player+EnemyShot), verifica sobreposição de rects. Se colidir, aplica dano mútuo.
     def verify_collision(entity_list: list[Entity]):
         for i in range(len(entity_list)):
             entity1 = entity_list[i]
@@ -64,7 +72,7 @@ class EntityMediator:
                 entity2 = entity_list[j]
                 EntityMediator.__verify_collision_entity(entity1, entity2)
 
-    #Verifica vida
+    #Percorre a lista e remove entidades com health <= 0. Se for um Enemy, chama __give_score antes de remover.
     @staticmethod
     def verify_health(entity_list: list[Entity]):
         for ent in entity_list:

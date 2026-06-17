@@ -1,3 +1,8 @@
+#Encapsula o SQLite. Cria a tabela automaticamente se não existir, salva novos scores e retorna o top 10
+#ordenado por pontuação.
+
+#Métodos: save · retrieve_top10 · close
+
 import sqlite3
 
 

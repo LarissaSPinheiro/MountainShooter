@@ -1,3 +1,6 @@
+#Todas as constantes do jogo: tamanhos de janela, velocidade/vida/dano/score de cada entidade,
+# teclas dos players, eventos customizados do pygame, opções de menu e posições da tela de score.
+
 import pygame
 from pygame.examples.grid import WINDOW_WIDTH
 #C
@@ -11,6 +14,7 @@ C_CYAN = (0, 128, 128)
 EVENT_ENEMY = pygame.USEREVENT + 1
 EVENT_TIMEOUT = pygame.USEREVENT + 2
 
+#velocidade em pixels por frame.
 ENTITY_SPEED = {
     'Level1Bg0': 0,
     'Level1Bg1': 1,
@@ -34,6 +38,7 @@ ENTITY_SPEED = {
     'Enemy2Shot': 2,
 }
 
+#Vida Inicial. Backgrounds possuem vidas imortais
 ENTITY_HEALTH = {
     'Level1Bg0': 999,
     'Level1Bg1': 999,
@@ -64,6 +69,7 @@ ENTITY_SHOT_DELAY = {
     'Enemy2': 200,
 }
 
+# Dano Causado ao colidir. Background dano zero
 ENTITY_DAMAGE = {
     'Level1Bg0': 0,
     'Level1Bg1': 0,
@@ -87,6 +93,7 @@ ENTITY_DAMAGE = {
     'Enemy2Shot': 15,
 }
 
+#Pontos que o player ganha ao destruir uma entidade
 ENTITY_SCORE = {
     'Level1Bg0': 0,
     'Level1Bg1': 0,
@@ -111,6 +118,7 @@ ENTITY_SCORE = {
 }
 
 # M
+#Opções do menu
 MENU_OPTION = ('NEW GAME 1P',
                'NEW GAME 2P - COOPERATIVE',
                'NEW GAME 2P - COMPETITIVE',
@@ -119,7 +127,8 @@ MENU_OPTION = ('NEW GAME 1P',
 )
 
 # P
-#generalização das setas
+
+#Permite adicionar novos players sem mudar o codigo de movimento
 PLAYER_KEY_UP = {'Player1': pygame.K_UP,
                  'Player2': pygame.K_w}
 PLAYER_KEY_DOWN = {'Player1': pygame.K_DOWN,
@@ -140,8 +149,10 @@ SPAWN_TIME = 4000
 TIMEOUT_STEP = 100 #100ms
 TIMEOUT_LEVEL = 20000 #20s
 
-#Tamanho imagens
+
 # W
+
+#Tamanho da janela em pixels
 WIN_WIDTH = 576
 WIN_HEIGHT = 324
 
