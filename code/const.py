@@ -2,7 +2,7 @@
 # teclas dos players, eventos customizados do pygame, opções de menu e posições da tela de score.
 
 import pygame
-from pygame.examples.grid import WINDOW_WIDTH
+
 #C
 C_ORANGE = (255, 128, 0)
 C_WHITE = (255, 255, 255)
@@ -28,14 +28,14 @@ ENTITY_SPEED = {
     'Level2Bg2': 2,
     'Level2Bg3': 3,
     'Level2Bg4': 4,
-    'Player1': 3,
-    'Player1Shot': 1,
-    'Player2': 3,
-    'Player2Shot': 3,
-    'Enemy1': 1,
-    'Enemy1Shot': 5,
-    'Enemy2': 1,
-    'Enemy2Shot': 2,
+    'Fish1': 3,
+    'Fish1Shot': 1,
+    'Fish2': 3,
+    'Fish2Shot': 3,
+    'Shark': 1, #inimigo 1
+    'SharkShot': 5,
+    'Octopus': 1, #inimigo 2
+    'OctopusShot': 2,
 }
 
 #Vida Inicial. Backgrounds possuem vidas imortais
@@ -52,21 +52,21 @@ ENTITY_HEALTH = {
     'Level2Bg2': 999,
     'Level2Bg3': 999,
     'Level2Bg4': 999,
-    'Player1': 300,
-    'Player1Shot': 1,
-    'Player2': 300,
-    'Player2Shot': 1,
-    'Enemy1': 50,
-    'Enemy1Shot': 1,
-    'Enemy2': 60,
-    'Enemy2Shot': 1,
+    'Fish1': 300,
+    'Fish1Shot': 1,
+    'Fish2': 300,
+    'Fish2Shot': 1,
+    'Shark': 50,
+    'SharkShot': 1,
+    'Octopus': 60,
+    'OctopusShot': 1,
 }
 
 ENTITY_SHOT_DELAY = {
-    'Player1': 20,
-    'Player2': 15,
-    'Enemy1': 100,
-    'Enemy2': 200,
+    'Fish1': 20,
+    'Fish2': 15,
+    'Shark': 100,
+    'Octopus': 200,
 }
 
 # Dano Causado ao colidir. Background dano zero
@@ -83,14 +83,14 @@ ENTITY_DAMAGE = {
     'Level2Bg2': 0,
     'Level2Bg3': 0,
     'Level2Bg4': 0,
-    'Player1': 1,
-    'Player1Shot': 25,
-    'Player2': 1,
-    'Player2Shot': 20,
-    'Enemy1': 1,
-    'Enemy1Shot': 20,
-    'Enemy2': 1,
-    'Enemy2Shot': 15,
+    'Fish1': 1,
+    'Fish1Shot': 25,
+    'Fish2': 1,
+    'Fish2Shot': 20,
+    'Shark': 1,
+    'SharkShot': 20,
+    'Octopus': 1,
+    'OctopusShot': 15,
 }
 
 #Pontos que o player ganha ao destruir uma entidade
@@ -107,15 +107,21 @@ ENTITY_SCORE = {
     'Level2Bg2': 0,
     'Level2Bg3': 0,
     'Level2Bg4': 0,
-    'Player1': 0,
-    'Player1Shot': 0,
-    'Player2': 0,
-    'Player2Shot': 0,
-    'Enemy1': 100,
-    'Enemy1Shot': 0,
-    'Enemy2': 125,
-    'Enemy2Shot': 0,
+    'Fish1': 0,
+    'Fish1Shot': 0,
+    'Fish2': 0,
+    'Fish2Shot': 0,
+    'Shark': 100,
+    'SharkShot': 0,
+    'Octopus': 125,
+    'OctopusShot': 0,
 }
+
+#G
+GRAVITY = 0.5
+
+# J
+JUMP_FORCE = -10
 
 # M
 #Opções do menu
@@ -129,16 +135,16 @@ MENU_OPTION = ('NEW GAME 1P',
 # P
 
 #Permite adicionar novos players sem mudar o codigo de movimento
-PLAYER_KEY_UP = {'Player1': pygame.K_UP,
-                 'Player2': pygame.K_w}
-PLAYER_KEY_DOWN = {'Player1': pygame.K_DOWN,
-                 'Player2': pygame.K_s}
-PLAYER_KEY_LEFT = {'Player1': pygame.K_LEFT,
-                 'Player2': pygame.K_a}
-PLAYER_KEY_RIGHT = {'Player1': pygame.K_RIGHT,
-                 'Player2': pygame.K_d}
-PLAYER_KEY_SHOOT = {'Player1': pygame.K_SPACE,
-                 'Player2': pygame.K_LCTRL
+PLAYER_KEY_UP = {'Fish1': pygame.K_UP,
+                 'Fish2': pygame.K_w}
+PLAYER_KEY_DOWN = {'Fish1': pygame.K_DOWN,
+                 'Fish2': pygame.K_s}
+PLAYER_KEY_LEFT = {'Fish1': pygame.K_LEFT,
+                 'Fish2': pygame.K_a}
+PLAYER_KEY_RIGHT = {'Fish1': pygame.K_RIGHT,
+                 'Fish2': pygame.K_d}
+PLAYER_KEY_SHOOT = {'Fish1': pygame.K_SPACE,
+                 'Fish2': pygame.K_LCTRL
                     }
 # S
 SPAWN_TIME = 4000

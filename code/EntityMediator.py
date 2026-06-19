@@ -53,13 +53,13 @@ class EntityMediator:
     @staticmethod
     # privado (__). Olha enemy.last_dmg para saber qual player atirou e adiciona os pontos ao score dele.
     def __give_score(enemy: Enemy, entity_list: list[Entity]):
-        if enemy.last_dmg == 'Player1Shot':
+        if enemy.last_dmg == 'Fish1Shot':
             for ent in entity_list:
-                if ent.name == 'Player1':
+                if ent.name == 'Fish1':
                     ent.score += enemy.score
-        elif enemy.last_dmg == 'Player2Shot':
+        elif enemy.last_dmg == 'Fish2Shot':
             for ent in entity_list:
-                if ent.name == 'Player2':
+                if ent.name == 'Fish2':
                     ent.score += enemy.score
 
     @staticmethod
@@ -80,3 +80,17 @@ class EntityMediator:
                 if isinstance(ent, Enemy):
                     EntityMediator.__give_score(ent, entity_list)
                 entity_list.remove(ent) #remove entidade
+
+    #Vefica se o jogador está em cima de uma plataforma
+    @staticmethod
+    def verify_platform(player, platforms):
+        player.on_ground = False #reseta antes de checar
+        for plat in platforms:
+            if (player.vel_y > 0 and
+                    player.rect.bottom >= plat.rect.top and
+                    player.rect.bottom <= plat.rect.top + 10 and
+                    player.rect.right > plat.rect.left and
+                    player.rect.left < plat.rect.right):
+                    player.rect.bottom = plat.rect.top
+                    player.vel_y = 0
+                    player.on_ground = True

@@ -7,7 +7,7 @@ import pygame
 from pygame import Surface, Rect
 from pygame.font import Font
 
-from code.const import WIN_WIDTH
+from code.const import WIN_WIDTH, C_CYAN
 from code.const import C_ORANGE
 from code.const import C_WHITE
 from code.const import C_YELLOW
@@ -30,9 +30,9 @@ class Menu:
         while True:
             #DRAW IMAGENS
             self.window.blit(source=self.surf, dest=self.rect)  # Adicionando a imagem ao retângulo
-            self.menu_text(50, "Mountain", (C_ORANGE), ((WIN_WIDTH / 2), 70)) #Adiciona texto ao menu
-            self.menu_text(50, "Shooter", (C_ORANGE), ((WIN_WIDTH / 2), 120)) #Adiciona texto ao menu
-
+            self.menu_text(50, "Aqua", (C_CYAN), ((WIN_WIDTH / 2), 70)) #Adiciona texto ao menu
+            self.menu_text(50, "Dash", (C_CYAN), ((WIN_WIDTH / 2), 120)) #Adiciona texto ao menu
+            self.menu_text(14, "← → Mover  |  ↑ Pular  |  SPACE Atira", C_WHITE, (WIN_WIDTH/2 ,300))
             #Cria o laço de repetição das opções do menu
             for i in range(len(MENU_OPTION)):
                 if i == menu_option: #Adiciona a cor amarela para o menu que está selecionado

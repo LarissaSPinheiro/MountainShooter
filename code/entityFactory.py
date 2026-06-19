@@ -3,9 +3,6 @@
 # separando a lógica de instanciação do restante.
 
 import random
-from unittest import case
-
-from pygame.examples.grid import WINDOW_HEIGHT
 
 from code.background import Background
 from code.const import WIN_WIDTH
@@ -33,12 +30,12 @@ class EntityFactory:
                     list_bg.append(Background(f'Level2Bg{i}', (0, 0))) #busca a imagem de acordo com o laço de repetição
                     list_bg.append(Background(f'Level2Bg{i}', (WIN_WIDTH, 0)))
                 return list_bg
-            case 'Player1':
-                return Player('Player1', (10, WIN_HEIGHT / 2 - 30)) #Posição do player 1 na
-            case 'Player2':
-                return Player('Player2', (10, WIN_HEIGHT / 2 + 30))  # Posição do player 2 na tela
-            case 'Enemy1':
-                return Enemy('Enemy1', (WIN_WIDTH + 10,  random.randint(40, WIN_HEIGHT - 40)))
-            case 'Enemy2':
-                return Enemy('Enemy2', (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
+            case 'Fish1':
+                return Player('Fish1', (10, WIN_HEIGHT / 2 - 30)) #Posição do player 1 na
+            case 'Fish2':
+                return Player('Fish2', (10, WIN_HEIGHT / 2 + 30))  # Posição do player 2 na tela
+            case 'Shark':
+                return Enemy('Shark', (WIN_WIDTH + 10,  random.randint(40, WIN_HEIGHT - 40)))
+            case 'Octopus':
+                return Enemy('Octopus', (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
 

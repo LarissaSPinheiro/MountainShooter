@@ -12,13 +12,15 @@ from pygame.font import Font
 
 from code.EntityMediator import EntityMediator
 from code.enemy import Enemy
-from code.entity import Entity
+
 from code.entityFactory import EntityFactory
 
 from code.const import C_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME, C_GREEN, C_CYAN, EVENT_TIMEOUT, TIMEOUT_STEP, TIMEOUT_LEVEL
 from code.player import Player
 
 from code.entity import Entity
+
+from code.platform import Platform
 
 
 class Level:
@@ -30,13 +32,18 @@ class Level:
         self.game_mode = game_mode #armazena o modo escolido (1P, 2P Coop, 2P Versus)
         self.entity_list: list[Entity] = [] #lista de todos objetos da fase
         self.entity_list.extend(EntityFactory.get_entity(self.name + 'Bg')) #pega os objetos do nivel 1 e joga na lista
-        player = EntityFactory.get_entity('Player1') #Inicializa pelo construtor a nave 1
+        player = EntityFactory.get_entity('Fish1') #Inicializa pelo construtor a nave 1
         player.score = player_score[0]
         self.entity_list.append(player)
         if game_mode in [MENU_OPTION[1], MENU_OPTION [2]]:
-            player = EntityFactory.get_entity('Player2')  # Inicializa pelo construtor a nave 1
+            player = EntityFactory.get_entity('Fish2')  # Inicializa pelo construtor a nave 1
             player.score = player_score[1]
             self.entity_list.append(player)
+        self.platforms = [
+            Platform(100, 220, 120),
+            Platform(280, 160, 120),
+            Platform(450, 240, 120),
+        ]
         # a CADA X tempo teremos um inimigo
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
         pygame.time.set_timer(EVENT_TIMEOUT, TIMEOUT_STEP) #checa a condição de vitória 100MS
@@ -57,24 +64,24 @@ class Level:
                     shoot = ent.shoot() #tenta atirar
                     if shoot is not None:
                         self.entity_list.append(shoot) #adiciona tiro à lista
-                if ent.name == 'Player1':
-                    self.level_text(14, f'Player1 - Health:{ent.health} | Score: {ent.score}', C_GREEN, (10 , 25))
-                if ent.name == 'Player2':
-                    self.level_text(14, f'Player2 - Health:{ent.health} | Score: {ent.score}', C_CYAN, (10 , 45))
+                if ent.name == 'Fish1':
+                    self.level_text(14, f'Fish1 - Health:{ent.health} | Score: {ent.score}', C_GREEN, (10 , 25))
+                if ent.name == 'Fish2':
+                    self.level_text(14, f'Fish2 - Health:{ent.health} | Score: {ent.score}', C_CYAN, (10 , 45))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == EVENT_ENEMY:
-                    choice = random.choice(('Enemy1', 'Enemy2'))
+                    choice = random.choice(('Shark', 'Octopus'))
                     self.entity_list.append(EntityFactory.get_entity(choice))
                 if event.type == EVENT_TIMEOUT:
                     self.timeout -= TIMEOUT_STEP #decrementa os 20000 tirando 100
                     if self.timeout == 0:
                         for ent in self.entity_list:
-                            if isinstance(ent, Player) and ent.name == 'Player1':
+                            if isinstance(ent, Player) and ent.name == 'Fish1':
                                 player_score[0] = ent.score
-                            if isinstance(ent, Player) and ent.name == 'Player2':
+                            if isinstance(ent, Player) and ent.name == 'Fish2':
                                 player_score[1] = ent.score
                         return True
 
@@ -84,6 +91,9 @@ class Level:
                         found_player = True
                 if not found_player:
                     return False
+            for ent in self.entity_list:
+                if isinstance(ent, Player):
+                    EntityMediator.verify_platform(ent, self.platforms)
 
             #printed text
             self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000 :.1f}s', C_WHITE, (10 , 5))  # Mostra o tempo de duração da fase
